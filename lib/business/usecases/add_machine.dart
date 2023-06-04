@@ -1,0 +1,20 @@
+import 'package:printer_monitoring/business/data_status.dart';
+import 'package:printer_monitoring/business/entities/machine.dart';
+import 'package:printer_monitoring/business/repository/machine_repository.dart';
+import 'package:printer_monitoring/business/use_case.dart';
+
+class AddMachineUserCase extends UseCase<bool, MachineEntity> {
+  final MachineRepository _machineRepository;
+
+  AddMachineUserCase(this._machineRepository);
+
+  @override
+  Future<DataStatus<bool>> templateCall(MachineEntity params) async {
+    switch (_machineRepository.addMachine(params)) {
+      case true:
+        return DataSuccess(true);
+      case false:
+        throw Exception('Error saving machine');
+    }
+  }
+}
