@@ -12,6 +12,8 @@ part 'machine_state.dart';
 
 class MachineBloc extends Bloc<MachineEvent, MachineState> {
   MachineBloc() : super(MachineInitial()) {
+
+
     on<LoadMachineEvent>((event, emit) async {
       final machinesStatus = await GeAllMachines(GetIt.I<MachineRepository>()).call();
       if (machinesStatus is DataSuccess && machinesStatus.data != null) {
