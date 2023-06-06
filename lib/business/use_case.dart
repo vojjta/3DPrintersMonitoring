@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:printer_monitoring/business/data_status.dart';
 
 abstract class UseCase<Type, Params> {
-  Future<DataStatus<Type>> call(Params params){
+  Future<DataStatus<Type>> call({Params? params}){
     try{
       return templateCall(params);
     }on Exception catch(e){
@@ -11,5 +11,5 @@ abstract class UseCase<Type, Params> {
       return Future.value(DataError(e));
     }
   }
-  Future<DataStatus<Type>> templateCall(Params params);
+  Future<DataStatus<Type>> templateCall(Params? params);
 }

@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:printer_monitoring/presentation/di/di_init.dart';
+import 'package:printer_monitoring/ui/pages/machine_page.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
+  initDI();
   runApp(const MyApp());
 }
 
@@ -12,34 +15,16 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
 
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: Scaffold(
+        body: MachinePage(),
+      ),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
 
-  final String title;
-
-  @override
-  State<MyHomePage> createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-        child: Container(
-          color: Colors.white,
-            child: SfRadialGauge()
-        ));
-  }
-}

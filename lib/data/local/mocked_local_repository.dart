@@ -2,7 +2,7 @@ import 'package:printer_monitoring/business/entities/machine.dart';
 import 'package:printer_monitoring/business/repository/machine_repository.dart';
 
 class MockedLocalRepository implements MachineRepository {
-  MachineEntity? _machineEntity = MachineEntity('testMachine', 'localhost');
+  MachineEntity? _machineEntity = MachineEntity('Mocked machine', 'localhost');
 
   @override
   bool addMachine(MachineEntity machine) {
@@ -34,4 +34,5 @@ class MockedLocalRepository implements MachineRepository {
     _machineEntity = machine;
     return true;
   }
+
 }

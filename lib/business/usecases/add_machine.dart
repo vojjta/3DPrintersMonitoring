@@ -9,8 +9,11 @@ class AddMachineUserCase extends UseCase<bool, MachineEntity> {
   AddMachineUserCase(this._machineRepository);
 
   @override
-  Future<DataStatus<bool>> templateCall(MachineEntity params) async {
-    switch (_machineRepository.addMachine(params)) {
+  Future<DataStatus<bool>> templateCall(MachineEntity? params) async {
+    if(params== null){
+      throw Exception('Machine params cannot be null');
+    }
+    switch (_machineRepository.addMachine(params!)) {
       case true:
         return DataSuccess(true);
       case false:
