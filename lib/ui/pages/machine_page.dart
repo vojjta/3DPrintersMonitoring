@@ -4,37 +4,30 @@ import 'package:printer_monitoring/presentation/bloc/machine/machine_bloc.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 class MachinePage extends StatelessWidget {
-   MachinePage({super.key});
-
-final myBloc = MachineBloc();
+  const MachinePage({super.key});
 
   @override
   Widget build(final BuildContext context) {
-    return Center(
-        child: BlocProvider<MachineBloc>(
+    return BlocProvider(
       create: (_) => MachineBloc(),
-      child: Container(
-          color: Colors.white,
-          child: Column(
+      child: Center(child: BlocBuilder<MachineBloc, MachineState>(
+        builder: (context, state) {
+          return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              BlocBuilder<MachineBloc, MachineState>(
-                bloc: myBloc,
-                builder: (_, state) {
-                  if (state is MachineLoaded) {
-                    return Text(state.machine.name, style: const TextStyle(fontSize: 24));
-                  }
-                  return Text('Machine Page', style: TextStyle(fontSize: 24));
-                },
-              ),
+              state is MachineLoaded
+                  ? Text(state.machine.name, style: const TextStyle(fontSize: 24))
+                  : const Text('Machine Page', style: TextStyle(fontSize: 24)),
               const SizedBox(
                 height: 10,
               ),
               SfRadialGauge(),
               ElevatedButton(
-                  onPressed: () => {myBloc.add(LoadMachineEvent())}, child: Text("refresh")),
+                  onPressed: () => {context.read<MachineBloc>().add(LoadMachineEvent())}, child: const Text("Refresh")),
             ],
-          )),
-    ));
+          );
+        },
+      )),
+    );
   }
 }
