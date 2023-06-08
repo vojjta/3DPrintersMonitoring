@@ -4,10 +4,10 @@ enum MachineState {
   error,
 }
 
-class MachineStatusEntity {
+class MachineInfoEntity {
   final MachineState state;
   final double bedTemp;
   final double nozzleTemp;
 
-  MachineStatusEntity(this.state, this.bedTemp, this.nozzleTemp);
+  MachineInfoEntity(this.state, this.bedTemp, this.nozzleTemp);
 }

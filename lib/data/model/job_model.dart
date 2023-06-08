@@ -1,7 +1,7 @@
 
-import 'package:printer_monitoring/business/entities/job.dart';
+import 'package:printer_monitoring/business/entities/job_status.dart';
 
-class JobModel extends JobEntity{
+class JobModel extends JobStatusEntity{
   JobModel(super.name, super.progress, super.eta);
   
   factory JobModel.fromJson(Map<String, dynamic> json) {

@@ -13,7 +13,7 @@ class AddMachineUserCase extends UseCase<bool, MachineEntity> {
     if(params== null){
       throw Exception('Machine params cannot be null');
     }
-    switch (_machineRepository.addMachine(params!)) {
+    switch (_machineRepository.addMachine(params)) {
       case true:
         return DataSuccess(true);
       case false:
