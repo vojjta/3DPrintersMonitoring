@@ -19,7 +19,9 @@ part 'machine_state.dart';
 class MachineBloc extends Bloc<MachineEvent, MachineState> {
   MachineBloc() : super(InitialNoMachine()) {
     on<MachineLoadCall>((_, final emit) async {
-      final machinesStatus = await GetAllMachines(GetIt.I<MachineRepository>()).call();
+
+      final DataStatus machinesStatus = await GetAllMachines(GetIt.I<MachineRepository>()).call();
+
       if (machinesStatus is DataSuccess && machinesStatus.data != null) {
         if (!GetIt.instance.isRegistered<StatusRepository>()) {
           GetIt.I.registerSingleton<StatusRepository>(SimpleMoonrakerRestAPI(machinesStatus.data!.first.address));

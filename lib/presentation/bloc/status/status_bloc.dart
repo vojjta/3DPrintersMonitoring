@@ -15,15 +15,20 @@ part 'status_state.dart';
 
 class StatusBloc extends Bloc<StatusEvent, StatusState> {
   StatusBloc() : super(StatusInitial()) {
-    on<StatusEvent>((event, emit) async {
+
+    on<StatusRefreshPressed>((event, emit) async {
+
       StatusRepository? repository = GetIt.I.isRegistered<StatusRepository>() ? GetIt.I<StatusRepository>() : null;
+
       if (repository != null) {
-        final status = await GetMachineStatus(repository!).call();
+        final DataStatus status = await GetMachineStatus(repository!).call();
+
         if (status is DataSuccess) {
           emit(StatusLoaded(status.data!));
           return;
         }
       }
+
       emit(StatusLoadError());
     });
   }

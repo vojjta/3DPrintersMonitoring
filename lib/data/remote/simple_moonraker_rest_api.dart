@@ -7,7 +7,7 @@ import 'package:printer_monitoring/business/repository/status_repository.dart';
 import 'package:printer_monitoring/data/model/machine_info_model.dart';
 import 'package:printer_monitoring/data/remote/api_request.dart';
 
-class SimpleMoonrakerRestAPI extends StatusRepository {
+class SimpleMoonrakerRestAPI implements StatusRepository {
   // API urls
   final String printerInfo = '/printer/info';
   final String machineInfo =

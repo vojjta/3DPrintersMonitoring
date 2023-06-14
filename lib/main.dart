@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:printer_monitoring/presentation/di/di_init.dart';
 import 'package:printer_monitoring/ui/pages/machine_page.dart';
-import 'package:syncfusion_flutter_gauges/gauges.dart';
 
 void main() {
   initDI();
