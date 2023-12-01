@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:printer_monitoring/business/entities/job_status.dart';
-import 'package:printer_monitoring/business/entities/machine_info.dart';
-import 'package:printer_monitoring/business/repository/status_repository.dart';
 import 'package:printer_monitoring/data/model/machine_info_model.dart';
 import 'package:printer_monitoring/data/remote/api_request.dart';
+import 'package:printer_monitoring/domain/entities/job_status.dart';
+import 'package:printer_monitoring/domain/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/repository/status_repository.dart';
 
 class SimpleMoonrakerRestAPI implements StatusRepository {
   // API urls

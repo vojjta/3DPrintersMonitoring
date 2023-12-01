@@ -16,6 +16,7 @@ class MachinePage extends StatelessWidget {
         MachineBloc()
           ..add(MachineLoadCall())),
         BlocProvider<StatusBloc>(create: (_) => StatusBloc()),
+
       ],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -25,7 +26,7 @@ class MachinePage extends StatelessWidget {
             children: [
               BlocBuilder<MachineBloc, MachineState>(builder: (_, state) {
                 return state is MachineLoaded
-                    ? MachineGauge(
+                  ? MachineGauge(
                   title: state.machine.name,
                   value: 25,
                 )

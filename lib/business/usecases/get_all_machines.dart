@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:printer_monitoring/business/data_status.dart';
-import 'package:printer_monitoring/business/entities/machine.dart';
-import 'package:printer_monitoring/business/repository/machine_repository.dart';
 import 'package:printer_monitoring/business/use_case.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/repository/machine_repository.dart';
 
 class GetAllMachines extends UseCase<List<MachineEntity>, void> {
   final MachineRepository _machineRepository;

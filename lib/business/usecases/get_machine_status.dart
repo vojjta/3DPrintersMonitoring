@@ -1,9 +1,9 @@
 import 'dart:developer';
 
 import 'package:printer_monitoring/business/data_status.dart';
-import 'package:printer_monitoring/business/entities/machine_info.dart';
-import 'package:printer_monitoring/business/repository/status_repository.dart';
 import 'package:printer_monitoring/business/use_case.dart';
+import 'package:printer_monitoring/domain/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/repository/status_repository.dart';
 
 class GetMachineStatus extends UseCase<MachineInfoEntity, void> {
   final StatusRepository _statusRepository;

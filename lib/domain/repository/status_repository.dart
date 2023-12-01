@@ -1,5 +1,5 @@
-import 'package:printer_monitoring/business/entities/job_status.dart';
-import 'package:printer_monitoring/business/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/entities/job_status.dart';
+import 'package:printer_monitoring/domain/entities/machine_info.dart';
 
 abstract class StatusRepository {
 

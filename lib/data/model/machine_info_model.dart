@@ -1,4 +1,4 @@
-import 'package:printer_monitoring/business/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/entities/machine_info.dart';
 
 class MachineInfoModel extends MachineInfoEntity {
   MachineInfoModel._(super.state, super.bedTemp, super.nozzleTemp, super.message);

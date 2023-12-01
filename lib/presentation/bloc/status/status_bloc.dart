@@ -1,23 +1,17 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:printer_monitoring/business/data_status.dart';
-import 'package:printer_monitoring/business/entities/machine_info.dart';
-import 'package:printer_monitoring/business/repository/status_repository.dart';
 import 'package:printer_monitoring/business/usecases/get_machine_status.dart';
-import 'package:printer_monitoring/presentation/bloc/machine/machine_bloc.dart';
+import 'package:printer_monitoring/domain/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/repository/status_repository.dart';
 
 part 'status_event.dart';
-
 part 'status_state.dart';
 
 class StatusBloc extends Bloc<StatusEvent, StatusState> {
   StatusBloc() : super(StatusInitial()) {
-
     on<StatusRefreshPressed>((event, emit) async {
-
       StatusRepository? repository = GetIt.I.isRegistered<StatusRepository>() ? GetIt.I<StatusRepository>() : null;
 
       if (repository != null) {

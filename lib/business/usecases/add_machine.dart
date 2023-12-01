@@ -1,7 +1,7 @@
 import 'package:printer_monitoring/business/data_status.dart';
-import 'package:printer_monitoring/business/entities/machine.dart';
-import 'package:printer_monitoring/business/repository/machine_repository.dart';
 import 'package:printer_monitoring/business/use_case.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/repository/machine_repository.dart';
 
 class AddMachineUseCase extends UseCase<bool, MachineEntity> {
   final MachineRepository _machineRepository;
@@ -10,7 +10,7 @@ class AddMachineUseCase extends UseCase<bool, MachineEntity> {
 
   @override
   Future<DataStatus<bool>> templateCall(MachineEntity? params) async {
-    if(params== null){
+    if (params == null) {
       throw Exception('Machine params cannot be null');
     }
     switch (_machineRepository.addMachine(params)) {

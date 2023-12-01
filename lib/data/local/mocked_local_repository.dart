@@ -1,5 +1,5 @@
-import 'package:printer_monitoring/business/entities/machine.dart';
-import 'package:printer_monitoring/business/repository/machine_repository.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/repository/machine_repository.dart';
 
 class MockedLocalRepository implements MachineRepository {
   MachineEntity? _machineEntity = MachineEntity('RedHood', '192.168.100.240');
@@ -34,5 +34,4 @@ class MockedLocalRepository implements MachineRepository {
     _machineEntity = machine;
     return true;
   }
-
 }

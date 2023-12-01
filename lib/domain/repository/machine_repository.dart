@@ -1,4 +1,4 @@
-import 'package:printer_monitoring/business/entities/machine.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
 
 abstract class MachineRepository {
   bool addMachine(MachineEntity machine);

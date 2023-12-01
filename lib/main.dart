@@ -15,15 +15,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: Scaffold(
+      home: const Scaffold(
         body: MachinePage(),
       ),
     );
   }
 }
-
-
