@@ -6,11 +6,9 @@ abstract class MachineState {}
 class InitialNoMachine extends MachineState {}
 
 class MachineLoaded extends MachineState {
-  final MachineEntity machine;
+  final Machine machine;
 
   MachineLoaded(this.machine);
 }
 
 class MachineLoadError extends MachineState {}
-
-

@@ -5,7 +5,7 @@ class MachineWidget extends StatelessWidget {
   final String title;
   final double value;
 
-  const MachineWidget({Key? key, required this.title, required this.value}) : super(key: key);
+  const MachineWidget({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {

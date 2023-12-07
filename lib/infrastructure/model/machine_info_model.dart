@@ -1,6 +1,6 @@
-import 'package:printer_monitoring/domain/entities/machine_info.dart';
+import 'package:printer_monitoring/domain/value/machine_info.dart';
 
-class MachineInfoModel extends MachineInfoEntity {
+class MachineInfoModel extends MachineInfo {
   MachineInfoModel._(super.state, super.bedTemp, super.nozzleTemp, super.message);
 
   factory MachineInfoModel.fromJson(Map<String, dynamic> json) {

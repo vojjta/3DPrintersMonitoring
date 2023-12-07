@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:printer_monitoring/data/remote/api_response.dart';
+import 'package:printer_monitoring/infrastructure/remote/api_response.dart';
 
 abstract class ApiRequest<Params> {
   final String address;

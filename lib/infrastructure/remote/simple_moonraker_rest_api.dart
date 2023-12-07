@@ -1,11 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:printer_monitoring/data/model/machine_info_model.dart';
-import 'package:printer_monitoring/data/remote/api_request.dart';
-import 'package:printer_monitoring/domain/entities/job_status.dart';
-import 'package:printer_monitoring/domain/entities/machine_info.dart';
-import 'package:printer_monitoring/domain/repository/status_repository.dart';
+import 'package:printer_monitoring/domain/repositories/status_repository.dart';
+import 'package:printer_monitoring/domain/value/job_status.dart';
+import 'package:printer_monitoring/domain/value/machine_info.dart';
+import 'package:printer_monitoring/infrastructure/model/machine_info_model.dart';
+import 'package:printer_monitoring/infrastructure/remote/api_request.dart';
 
 class SimpleMoonrakerRestAPI implements StatusRepository {
   // API urls
@@ -25,13 +25,13 @@ class SimpleMoonrakerRestAPI implements StatusRepository {
   }
 
   @override
-  Future<JobStatusEntity?> getJob() {
+  Future<JobStatus?> getJob() {
     // TODO: implement getJob
     throw UnimplementedError();
   }
 
   @override
-  Future<MachineInfoEntity?> getStatusInfo() async {
+  Future<MachineInfo?> getStatusInfo() async {
     final apiResponse = await GetApiRequest(dio, address).call(machineInfo);
     if (apiResponse.isStatusOk) {
       return MachineInfoModel.fromJson(apiResponse.jsonData!['result']['status']);

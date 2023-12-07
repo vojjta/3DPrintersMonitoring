@@ -3,8 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:meta/meta.dart';
 import 'package:printer_monitoring/business/data_status.dart';
 import 'package:printer_monitoring/business/usecases/get_machine_status.dart';
-import 'package:printer_monitoring/domain/entities/machine_info.dart';
-import 'package:printer_monitoring/domain/repository/status_repository.dart';
+import 'package:printer_monitoring/domain/repositories/status_repository.dart';
+import 'package:printer_monitoring/domain/value/machine_info.dart';
 
 part 'status_event.dart';
 part 'status_state.dart';

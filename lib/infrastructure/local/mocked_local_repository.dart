@@ -1,17 +1,17 @@
 import 'package:printer_monitoring/domain/entities/machine.dart';
-import 'package:printer_monitoring/domain/repository/machine_repository.dart';
+import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
 
 class MockedLocalRepository implements MachineRepository {
-  MachineEntity? _machineEntity = MachineEntity('RedHood', '192.168.100.240');
+  Machine? _machineEntity = Machine.create('RedHood', '192.168.100.244');
 
   @override
-  bool addMachine(MachineEntity machine) {
+  bool addMachine(Machine machine) {
     _machineEntity = machine;
     return true;
   }
 
   @override
-  List<MachineEntity> getAllMachines() {
+  List<Machine> getAllMachines() {
     if (_machineEntity != null) {
       return [_machineEntity!];
     }
@@ -19,18 +19,18 @@ class MockedLocalRepository implements MachineRepository {
   }
 
   @override
-  MachineEntity? getMachine(String address) {
+  Machine? getMachine(String address) {
     return _machineEntity;
   }
 
   @override
-  bool removeMachine(MachineEntity machine) {
+  bool removeMachine(Machine machine) {
     _machineEntity = null;
     return true;
   }
 
   @override
-  bool updateMachine(MachineEntity machine) {
+  bool updateMachine(Machine machine) {
     _machineEntity = machine;
     return true;
   }

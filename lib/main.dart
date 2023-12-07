@@ -4,6 +4,7 @@ import 'package:printer_monitoring/ui/pages/machine_page.dart';
 
 void main() {
   initDI();
+
   runApp(const MyApp());
 }
 

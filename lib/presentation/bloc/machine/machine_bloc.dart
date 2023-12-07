@@ -1,28 +1,25 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:printer_monitoring/business/data_status.dart';
-import 'package:printer_monitoring/domain/entities/machine.dart';
-import 'package:printer_monitoring/domain/repository/machine_repository.dart';
-import 'package:printer_monitoring/domain/repository/status_repository.dart';
 import 'package:printer_monitoring/business/usecases/get_all_machines.dart';
-import 'package:printer_monitoring/data/remote/simple_moonraker_rest_api.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
+import 'package:printer_monitoring/domain/repositories/status_repository.dart';
+import 'package:printer_monitoring/infrastructure/remote/simple_moonraker_rest_api.dart';
 
 part 'machine_event.dart';
-
 part 'machine_state.dart';
 
 class MachineBloc extends Bloc<MachineEvent, MachineState> {
   MachineBloc() : super(InitialNoMachine()) {
     on<MachineLoadCall>((_, final emit) async {
-
-      final DataStatus machinesStatus = await GetAllMachines(GetIt.I<MachineRepository>()).call();
+      final DataStatus<List<Machine>> machinesStatus = await GetAllMachines(GetIt.I<MachineRepository>()).call();
 
       if (machinesStatus is DataSuccess && machinesStatus.data != null) {
         if (!GetIt.instance.isRegistered<StatusRepository>()) {
-          GetIt.I.registerSingleton<StatusRepository>(SimpleMoonrakerRestAPI(machinesStatus.data!.first.address));
+          GetIt.I.registerSingleton<StatusRepository>(
+              SimpleMoonrakerRestAPI(machinesStatus.data!.first.address.toString()));
         }
         emit(MachineLoaded(machinesStatus.data!.first));
       } else {

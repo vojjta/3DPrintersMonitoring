@@ -1,26 +1,27 @@
 import 'dart:developer';
 
 import 'package:printer_monitoring/business/data_status.dart';
+import 'package:printer_monitoring/business/exceptions/get_machine_exception.dart';
 import 'package:printer_monitoring/business/use_case.dart';
-import 'package:printer_monitoring/domain/entities/machine_info.dart';
-import 'package:printer_monitoring/domain/repository/status_repository.dart';
+import 'package:printer_monitoring/domain/repositories/status_repository.dart';
+import 'package:printer_monitoring/domain/value/machine_info.dart';
 
-class GetMachineStatus extends UseCase<MachineInfoEntity, void> {
+final class GetMachineStatus extends UseCase<MachineInfo, void> {
   final StatusRepository _statusRepository;
 
   GetMachineStatus(this._statusRepository);
 
   @override
-  Future<DataStatus<MachineInfoEntity>> templateCall(void params) async {
+  Future<DataStatus<MachineInfo>> templateCall(void params) async {
     log('Trying to get machine status');
     if (!(await _statusRepository.isRepositoryReady())) {
-      throw Exception('Repository not ready');
+      throw GetMachineException('Repository not ready', repository: _statusRepository);
     }
 
-    final MachineInfoEntity? status = await _statusRepository.getStatusInfo();
+    final MachineInfo? status = await _statusRepository.getStatusInfo();
     if (status != null) {
       return DataSuccess(status);
     }
-    throw Exception('No status found');
+    throw GetMachineException('No status found', repository: _statusRepository);
   }
 }

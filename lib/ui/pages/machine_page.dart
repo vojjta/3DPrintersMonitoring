@@ -12,11 +12,8 @@ class MachinePage extends StatelessWidget {
   Widget build(final BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider<MachineBloc>(create: (_) =>
-        MachineBloc()
-          ..add(MachineLoadCall())),
+        BlocProvider<MachineBloc>(create: (_) => MachineBloc()..add(MachineLoadCall())),
         BlocProvider<StatusBloc>(create: (_) => StatusBloc()),
-
       ],
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -24,24 +21,23 @@ class MachinePage extends StatelessWidget {
           Stack(
             alignment: Alignment.center,
             children: [
-              BlocBuilder<MachineBloc, MachineState>(builder: (_, state) {
+              BlocBuilder<MachineBloc, MachineState>(builder: (_, final state) {
                 return state is MachineLoaded
-                  ? MachineGauge(
-                  title: state.machine.name,
-                  value: 25,
-                )
+                    ? MachineGauge(
+                        title: state.machine.name,
+                        value: 25,
+                      )
                     : const Text('Machine', style: TextStyle(fontSize: 24));
               }),
               BlocBuilder<StatusBloc, StatusState>(
-                // bloc: statusBloc,
+                  // bloc: statusBloc,
                   builder: (_, state) {
-                    return state is StatusLoaded
-                        ? Text('N: ${state.status.nozzleTemp}\nB: ${state.status.bedTemp}')
-                        : const SizedBox.shrink();
-                  })
+                return state is StatusLoaded
+                    ? Text('N: ${state.status.nozzleTemp}\nB: ${state.status.bedTemp}')
+                    : const SizedBox.shrink();
+              })
             ],
           ),
-
           const SizedBox(
             height: 10,
           ),

@@ -6,7 +6,7 @@ abstract class StatusState {}
 class StatusInitial extends StatusState {}
 
 class StatusLoaded extends StatusState {
-  final MachineInfoEntity status;
+  final MachineInfo status;
 
   StatusLoaded(this.status);
 }

@@ -1,6 +1,8 @@
+import 'package:printer_monitoring/business/use_case_exception.dart';
+
 abstract class DataStatus<Type> {
   final Type? data;
-  final Exception? e;
+  final UseCaseException? e;
 
   DataStatus({this.data, this.e});
 
@@ -9,10 +11,10 @@ abstract class DataStatus<Type> {
   bool get hasData => data != null;
 }
 
-class DataSuccess<Type> extends DataStatus<Type> {
+final class DataSuccess<Type> extends DataStatus<Type> {
   DataSuccess(Type data) : super(data: data);
 }
 
-class DataError<Type> extends DataStatus<Type> {
-  DataError(Exception e) : super(e: e);
+final class DataError<Type> extends DataStatus<Type> {
+  DataError(UseCaseException e) : super(e: e);
 }
