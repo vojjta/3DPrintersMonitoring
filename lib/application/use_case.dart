@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:printer_monitoring/application/data_status.dart';
 import 'package:printer_monitoring/application/use_case_exception.dart';
 
+@Deprecated('Use Command/AsyncCommand instead or bloc')
 abstract class UseCase<Type, Params> {
   Future<DataStatus<Type>> call({Params? params}) async {
     try {

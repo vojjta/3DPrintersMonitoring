@@ -1,10 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
-import 'package:printer_monitoring/application/data_status.dart';
-import 'package:printer_monitoring/application/usecases/has_any_machine.dart';
+import 'package:printer_monitoring/application/commands/has_any_machine_cmd.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
-import 'package:printer_monitoring/ui/pages/add_printer_page.dart';
-import 'package:printer_monitoring/ui/pages/home_page.dart';
+import 'package:printer_monitoring/presentation/pages/add_printer_page.dart';
+import 'package:printer_monitoring/presentation/pages/home_page.dart';
 
 enum AppRoute {
   home('/'),
@@ -38,13 +37,10 @@ final class Routes {
   }
 
   static Future<String> _initialRoute() async {
-    final DataStatus<bool> dataStatus = await HasAnyMachine(GetIt.I<StorageRepository>()).call();
+    final hasMachine = await HasAnyMachineCmd(GetIt.I<StorageRepository>()).execute();
 
-    if (dataStatus is DataSuccess) {
-      final bool hasPrinter = dataStatus.data ?? false;
-      if (hasPrinter) {
-        return AppRoute.home.path;
-      }
+    if (hasMachine) {
+      return AppRoute.home.path;
     }
     return AppRoute.addPrinter.path;
   }

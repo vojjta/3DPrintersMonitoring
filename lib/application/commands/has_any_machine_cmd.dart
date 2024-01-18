@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:printer_monitoring/application/commands.dart';
+import 'package:printer_monitoring/application/command.dart';
 import 'package:printer_monitoring/domain/entities/machine.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
 

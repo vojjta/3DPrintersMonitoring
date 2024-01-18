@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:printer_monitoring/presentation/bloc/printer/printer_bloc.dart';
-import 'package:printer_monitoring/presentation/bloc/status/status_bloc.dart';
-import 'package:printer_monitoring/ui/components/app_button.dart';
-import 'package:printer_monitoring/ui/components/machine_gauge.dart';
+import 'package:printer_monitoring/application/bloc/printer/printer_bloc.dart';
+import 'package:printer_monitoring/application/bloc/status/status_bloc.dart';
+import 'package:printer_monitoring/presentation/components/app_button.dart';
+import 'package:printer_monitoring/presentation/components/machine_gauge.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
                     // bloc: statusBloc,
                     builder: (_, state) {
                   return state is StatusLoaded
-                      ? Text('N: ${state.status.nozzleTemp}\nB: ${state.status.bedTemp}')
+                      ? Text('N: ${state.nozzleTemp}\nB: ${state.bedTemp}')
                       : const SizedBox.shrink();
                 })
               ],

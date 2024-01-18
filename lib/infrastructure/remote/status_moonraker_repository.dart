@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:printer_monitoring/domain/primitives/either.dart';
 import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
 import 'package:printer_monitoring/domain/value/job_status.dart';
 import 'package:printer_monitoring/domain/value/machine_info.dart';
+import 'package:printer_monitoring/infrastructure/mappers/printer_status_mapper.dart';
 import 'package:printer_monitoring/infrastructure/model/json/printer_info_result.dart';
 import 'package:printer_monitoring/infrastructure/model/json/printer_status_result.dart';
 import 'package:printer_monitoring/infrastructure/remote/clients/moonraker_client.dart';
@@ -21,36 +23,38 @@ final class StatusMoonrakerRepository implements MachineRepository {
   }
 
   @override
-  Future<JobStatus?> getJob() {
+  Future<Either<MachineRepositoryStatus, JobStatus>> getJob() {
     // TODO: implement getJob
     throw UnimplementedError();
   }
 
   @override
-  Future<MachineInfo?> getStatusInfo() async {
+  Future<Either<MachineRepositoryStatus, MachineInfo>> getStatusInfo() async {
     try {
       final PrinterStatusResult result = await _client.getPrinterStatus('temperature', 'temperature', 'state,message');
       log('Status info result: $result', name: 'StatusMoonrakerRepository');
-      return result.toMachineInfo();
+      return Either.success(PrinterStatusMapper.toMachineInfo(result));
     } on DioException catch (e) {
       log('Can not fetch status info pro API', error: e, name: 'StatusMoonrakerRepository');
+      Either.error(MachineRepositoryError(e));
     }
-    return null;
+    return Either.error(MachineRepositoryNotFound());
   }
 
   @override
-  Future<bool> isRepositoryReady() async {
+  Future<Either<MachineRepositoryStatus, bool>> isRepositoryReady() async {
     try {
       final HttpResponse<PrinterInfoResult> info = await _client.getPrinterInfo();
 
       if (info.response.statusCode == 200) {
         log('Connection to printer verified', name: 'StatusMoonrakerRepository');
         log('${info.data}', name: 'StatusMoonrakerRepository');
-        return true;
+        return Either.success(true);
       }
     } on DioException catch (e) {
       log('Can not verify connection to printer', error: e, name: 'StatusMoonrakerRepository');
+      Either.error(MachineRepositoryError(e));
     }
-    return false;
+    return Either.success(false);
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
-import 'package:printer_monitoring/presentation/bloc/printer/add_printer_bloc.dart';
-import 'package:printer_monitoring/ui/navigation/routes.dart';
+import 'package:printer_monitoring/application/bloc/printer/add_printer_bloc.dart';
+import 'package:printer_monitoring/presentation/navigation/routes.dart';
 
 class AddPrinterPage extends StatefulWidget {
   const AddPrinterPage({super.key});

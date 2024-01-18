@@ -9,4 +9,9 @@ class MachineInfo {
   MachineInfo(final String state, this.bedTemp, this.nozzleTemp, this.message) {
     this.state = MachineState.fromString(state);
   }
+
+  @override
+  String toString() {
+    return 'MachineInfo{state: $state, bedTemp: $bedTemp, nozzleTemp: $nozzleTemp, message: $message}';
+  }
 }

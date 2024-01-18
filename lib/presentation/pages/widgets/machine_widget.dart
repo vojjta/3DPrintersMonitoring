@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:printer_monitoring/ui/components/machine_gauge.dart';
+import 'package:printer_monitoring/presentation/components/machine_gauge.dart';
 
 class MachineWidget extends StatelessWidget {
   final String title;

@@ -11,9 +11,9 @@ sealed class Either<L, R> {
     return Right<L, R>(value);
   }
 
-  bool get isSuccess => this is Left<L, R>;
+  bool get isSuccess => this is Right<L, R>;
 
-  bool get isError => this is Right<L, R>;
+  bool get isError => this is Left<L, R>;
 
   /// Get [Left] value, may throw an exception when the value is [Right]
   L get error =>

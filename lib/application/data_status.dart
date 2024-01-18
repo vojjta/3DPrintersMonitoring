@@ -1,5 +1,7 @@
 import 'package:printer_monitoring/application/use_case_exception.dart';
 
+
+@Deprecated('Use [Either] instead')
 abstract class DataStatus<Type> {
   final Type? data;
   final UseCaseException? e;

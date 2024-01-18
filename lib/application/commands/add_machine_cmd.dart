@@ -1,4 +1,4 @@
-import 'package:printer_monitoring/application/commands.dart';
+import 'package:printer_monitoring/application/command.dart';
 import 'package:printer_monitoring/application/dto/printer_info.dart';
 import 'package:printer_monitoring/application/mappers/printer_mapper.dart';
 import 'package:printer_monitoring/domain/entities/machine.dart';

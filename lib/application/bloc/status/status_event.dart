@@ -1,4 +1,4 @@
-part of 'status_bloc.dart';
+part of '../../../application/bloc/status/status_bloc.dart';
 
 @immutable
 abstract class StatusEvent {}

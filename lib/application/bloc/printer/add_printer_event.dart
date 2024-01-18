@@ -1,4 +1,4 @@
-part of 'add_printer_bloc.dart';
+part of '../../../application/bloc/printer/add_printer_bloc.dart';
 
 @immutable
 abstract class AddPrinterEvent {}

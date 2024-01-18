@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:printer_monitoring/presentation/di/di_init.dart';
-import 'package:printer_monitoring/ui/navigation/routes.dart';
+import 'package:printer_monitoring/presentation/navigation/routes.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

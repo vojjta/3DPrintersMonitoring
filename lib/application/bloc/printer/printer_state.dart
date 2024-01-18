@@ -1,4 +1,4 @@
-part of 'printer_bloc.dart';
+part of '../../../application/bloc/printer/printer_bloc.dart';
 
 @immutable
 abstract class PrinterState {}
