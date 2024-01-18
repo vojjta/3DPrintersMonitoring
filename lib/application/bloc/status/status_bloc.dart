@@ -16,7 +16,7 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
 
       final readyResult = await repository.isRepositoryReady();
 
-      if (readyResult.isSuccess) {
+      if (readyResult.isSuccess && readyResult.success) {
         final statusResult = await repository.getStatusInfo();
         if (statusResult.isSuccess) {
           log('Status loaded: ${statusResult.success}', name: 'StatusBloc');
@@ -24,7 +24,7 @@ class StatusBloc extends Bloc<StatusEvent, StatusState> {
           return;
         }
       }
-      log('Status load error: ${readyResult.error}', name: 'StatusBloc');
+      log('Status load error: ${readyResult.error.runtimeType}', name: 'StatusBloc');
       emit(StatusLoadError());
     });
   }
