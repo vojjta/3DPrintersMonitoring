@@ -1,7 +1,6 @@
 import 'dart:developer';
 
-import 'package:printer_monitoring/application/command.dart';
-import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/application/commands/command.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
 
 final class HasAnyMachineCmd implements AsyncCommand<bool> {
@@ -11,10 +10,14 @@ final class HasAnyMachineCmd implements AsyncCommand<bool> {
 
   @override
   Future<bool> execute() async {
-    List<Machine> machines = await _storageRepository.getAllMachines();
+    final machinesResult = await _storageRepository.getAllMachines();
 
-    log('There is ${machines.length} machines', name: 'HasAnyMachine');
+    if (machinesResult.isSuccess) {
+      log('There is ${machinesResult.success.length} machines', name: 'HasAnyMachine');
 
-    return Future.value(machines.isNotEmpty);
+      return Future.value(machinesResult.success.isNotEmpty);
+    }
+
+    return Future.value(false);
   }
 }

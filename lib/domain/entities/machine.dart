@@ -6,6 +6,8 @@ final class Machine extends Entity {
   final String name;
   final IpAddress address;
 
+  String get httpAddress => address.http;
+
   Machine._(
     super.id,
     this.name,
@@ -24,15 +26,16 @@ final class Machine extends Entity {
       IpAddress(address, port: port),
     );
   }
-  // for development purpose
-  factory Machine.createWithId(
+
+  factory Machine.createNew(
     String name,
-    String address,
-  ) {
+    String address, {
+    int port = 80,
+  }) {
     return Machine._(
       fastHash(const Uuid().v4()),
       name,
-      IpAddress(address),
+      IpAddress(address, port: port),
     );
   }
 

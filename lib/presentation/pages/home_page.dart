@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:printer_monitoring/application/bloc/printer/printer_bloc.dart';
+import 'package:printer_monitoring/application/bloc/printer/printer_state.dart';
 import 'package:printer_monitoring/application/bloc/status/status_bloc.dart';
 import 'package:printer_monitoring/presentation/components/app_button.dart';
 import 'package:printer_monitoring/presentation/components/machine_gauge.dart';
@@ -25,7 +26,7 @@ class HomePage extends StatelessWidget {
                 BlocBuilder<MachineBloc, PrinterState>(builder: (_, final state) {
                   return state is PrinterLoaded
                       ? MachineGauge(
-                          title: state.printer.name,
+                          title: state.name,
                           value: 25,
                         )
                       : const Text('Machine', style: TextStyle(fontSize: 24));

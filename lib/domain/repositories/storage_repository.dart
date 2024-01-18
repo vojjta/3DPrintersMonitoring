@@ -1,9 +1,23 @@
 import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/primitives/either.dart';
 
 abstract interface class StorageRepository {
-  Future<void> addMachine(Machine machine);
+  Future<Either<StorageRepositoryStatus, void>> addMachine(Machine machine);
 
-  Future<List<Machine>> getAllMachines();
+  Future<Either<StorageRepositoryStatus, List<Machine>>> getAllMachines();
 
-  bool removeMachine(int id);
+  Future<Either<StorageRepositoryStatus, void>> removeMachine(int id);
+}
+
+sealed class StorageRepositoryStatus {}
+
+final class StorageRepositoryError extends StorageRepositoryStatus {
+  final Exception exception;
+
+  StorageRepositoryError(this.exception);
+
+  @override
+  String toString() {
+    return exception.toString();
+  }
 }

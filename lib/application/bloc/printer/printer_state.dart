@@ -1,14 +1,11 @@
-part of '../../../application/bloc/printer/printer_bloc.dart';
-
-@immutable
 abstract class PrinterState {}
 
 class InitialNoPrinter extends PrinterState {}
 
 class PrinterLoaded extends PrinterState {
-  final PrinterInfo printer;
+  final String name;
 
-  PrinterLoaded(this.printer);
+  PrinterLoaded({required this.name});
 }
 
 class PrinterLoadError extends PrinterState {}
