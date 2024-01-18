@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:printer_monitoring/domain/value/machine_info.dart';
 
 part 'printer_status_result.g.dart';
 
@@ -13,15 +12,6 @@ final class PrinterStatusResult {
   PrinterStatusResult({required this.status, required this.eventTime});
 
   factory PrinterStatusResult.fromJson(Map<String, dynamic> json) => _$PrinterStatusResultFromJson(json['result']);
-
-  MachineInfo toMachineInfo() {
-    return MachineInfo(
-      status.printStats.state,
-      status.heaterBed.temperature,
-      status.extruder.temperature,
-      status.printStats.message,
-    );
-  }
 
   @override
   String toString() {

@@ -6,6 +6,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:printer_monitoring/domain/entities/machine.dart';
 import 'package:printer_monitoring/domain/primitives/either.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
+import 'package:printer_monitoring/infrastructure/mappers/stored_machine_mapper.dart';
 import 'package:printer_monitoring/infrastructure/model/hive/stored_machine.dart';
 
 // TODO(vojjta): handle exceptions
@@ -16,7 +17,7 @@ final class StorageIsarRepository implements StorageRepository {
   @override
   Future<Either<StorageRepositoryStatus, void>> addMachine(Machine machine) async {
     await _isar?.writeTxn(() async {
-      await _isar?.storedMachines.put(StoredMachine.fromMachine(machine));
+      await _isar?.storedMachines.put(StoredMachineMapper.fromMachine(machine));
     });
     return Future.value(Either.success(null));
   }
@@ -35,7 +36,7 @@ final class StorageIsarRepository implements StorageRepository {
   Future<Either<StorageRepositoryStatus, List<Machine>>> getAllMachines() async {
     return Future.value(
       Either.success(
-        (await _isar?.storedMachines.where().findAll())?.map((m) => m.toMachine()).toList() ?? [],
+        (await _isar?.storedMachines.where().findAll())?.map((m) => StoredMachineMapper.toMachine(m)).toList() ?? [],
       ),
     );
   }
