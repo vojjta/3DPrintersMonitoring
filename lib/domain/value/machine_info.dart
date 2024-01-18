@@ -6,7 +6,7 @@ class MachineInfo {
   final double nozzleTemp;
   final String message;
 
-  MachineInfo(String state, this.bedTemp, this.nozzleTemp, this.message) {
+  MachineInfo(final String state, this.bedTemp, this.nozzleTemp, this.message) {
     this.state = MachineState.fromString(state);
   }
 }

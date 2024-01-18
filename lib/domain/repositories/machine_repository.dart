@@ -1,13 +1,10 @@
-import 'package:printer_monitoring/domain/entities/machine.dart';
+import 'package:printer_monitoring/domain/value/job_status.dart';
+import 'package:printer_monitoring/domain/value/machine_info.dart';
 
 abstract interface class MachineRepository {
-  bool addMachine(Machine machine);
+  Future<bool> isRepositoryReady();
 
-  Machine? getMachine(String address);
+  Future<MachineInfo?> getStatusInfo();
 
-  List<Machine> getAllMachines();
-
-  bool removeMachine(Machine machine);
-
-  bool updateMachine(Machine machine);
+  Future<JobStatus?> getJob();
 }

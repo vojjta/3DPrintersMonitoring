@@ -1,27 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:printer_monitoring/presentation/di/di_init.dart';
-import 'package:printer_monitoring/ui/pages/machine_page.dart';
+import 'package:printer_monitoring/ui/navigation/routes.dart';
 
-void main() {
-  initDI();
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  runApp(const MyApp());
+  await initDI();
+
+  final GoRouter router = await Routes.create();
+
+  runApp(MyApp(router: router));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  final GoRouter router;
+  const MyApp({super.key, required this.router});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const Scaffold(
-        body: MachinePage(),
-      ),
+      routerConfig: router,
     );
   }
 }

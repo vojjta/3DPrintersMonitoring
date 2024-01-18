@@ -1,5 +1,5 @@
 base class Entity {
-  final String id;
+  final int id;
 
   Entity(this.id);
 }

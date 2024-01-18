@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:syncfusion_flutter_gauges/gauges.dart';
 
@@ -14,7 +13,6 @@ class MachineGauge extends StatelessWidget {
       backgroundColor: Colors.transparent,
       title: GaugeTitle(text: title, textStyle: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold)),
       axes: [
-
         RadialAxis(
           startAngle: 90,
           endAngle: 360,
@@ -23,9 +21,19 @@ class MachineGauge extends StatelessWidget {
           axisLineStyle: const AxisLineStyle(
             cornerStyle: CornerStyle.bothCurve,
           ),
-          ranges: [GaugeRange(startValue: 0, endValue: 0, )],
+          ranges: [
+            GaugeRange(
+              startValue: 0,
+              endValue: 0,
+            )
+          ],
           // annotations: [GaugeAnnotation(widget: Text('0')) ,],
-          pointers: [RangePointer(value: value, color: Colors.red.shade200,)],
+          pointers: [
+            RangePointer(
+              value: value,
+              color: Colors.red.shade200,
+            )
+          ],
         )
       ],
     );

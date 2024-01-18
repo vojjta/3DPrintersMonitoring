@@ -1,12 +1,14 @@
 // TODO(Vojjta): Add validation
 class IpAddress {
-  final String host;
+  final String ip;
   final int port;
 
-  IpAddress(this.host, {this.port = 80});
+  IpAddress(this.ip, {this.port = 80});
+
+  String get http => 'http://$ip:$port';
 
   @override
   String toString() {
-    return '$host:$port';
+    return '$ip:$port';
   }
 }
