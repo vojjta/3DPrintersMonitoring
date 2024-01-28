@@ -1,5 +1,5 @@
-import 'package:printer_monitoring/domain/entity.dart';
-import 'package:printer_monitoring/domain/value/ip_address.dart';
+import 'package:printer_monitoring/domain/primitives/entity.dart';
+import 'package:printer_monitoring/domain/values/ip_address.dart';
 
 final class Machine extends Entity {
   final String name;

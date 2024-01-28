@@ -1,4 +1,4 @@
-import 'package:printer_monitoring/domain/value/machine_info.dart';
+import 'package:printer_monitoring/domain/values/machine_info.dart';
 import 'package:printer_monitoring/infrastructure/model/json/printer_status_result.dart';
 
 final class PrinterStatusMapper {

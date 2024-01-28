@@ -13,7 +13,7 @@ final class IpAddress {
       throw ValueException('Invalid IP address: $hostAddress. ${e.message}');
     }
 
-    if (port < 0 && port > 65535) {
+    if (port < 0 || port > 65535) {
       throw ValueException('Invalid port: $port. Port must be between 0 and 65535');
     }
 
