@@ -1,6 +1,5 @@
 import 'package:printer_monitoring/domain/entity.dart';
 import 'package:printer_monitoring/domain/value/ip_address.dart';
-import 'package:uuid/uuid.dart';
 
 final class Machine extends Entity {
   final String name;
@@ -14,6 +13,11 @@ final class Machine extends Entity {
     this.address,
   );
 
+  Machine._new(
+    this.name,
+    this.address,
+  ) : super.createNew();
+
   factory Machine.create(
     int id,
     String name,
@@ -23,7 +27,7 @@ final class Machine extends Entity {
     return Machine._(
       id,
       name,
-      IpAddress(address, port: port),
+      IpAddress.fromString(address, port: port),
     );
   }
 
@@ -32,27 +36,10 @@ final class Machine extends Entity {
     String address, {
     int port = 80,
   }) {
-    return Machine._(
-      fastHash(const Uuid().v4()),
+    return Machine._new(
       name,
-      IpAddress(address, port: port),
+      IpAddress.fromString(address, port: port),
     );
-  }
-
-  // https://isar.dev/recipes/string_ids.html#fast-hash-function
-  static int fastHash(String string) {
-    var hash = 0xcbf29ce484222325;
-
-    var i = 0;
-    while (i < string.length) {
-      final codeUnit = string.codeUnitAt(i++);
-      hash ^= codeUnit >> 8;
-      hash *= 0x100000001b3;
-      hash ^= codeUnit & 0xFF;
-      hash *= 0x100000001b3;
-    }
-
-    return hash;
   }
 
   @override
