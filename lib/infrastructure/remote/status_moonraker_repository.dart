@@ -46,7 +46,7 @@ final class StatusMoonrakerRepository with L implements MachineRepository {
         return Either.success(true);
       }
     } on DioException catch (e) {
-      l.d('Can not verify connection to printer', error: e);
+      l.e('Can not verify connection to printer', error: e);
       return Either.error(MachineRepositoryError(e));
     }
     return Either.success(false);
