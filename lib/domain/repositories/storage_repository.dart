@@ -9,6 +9,7 @@ abstract interface class StorageRepository {
   Future<Either<StorageRepositoryStatus, void>> removeMachine(int id);
 }
 
+/// TODO(Vojjta): Unify repository statuses
 sealed class StorageRepositoryStatus {}
 
 final class StorageRepositoryError extends StorageRepositoryStatus {

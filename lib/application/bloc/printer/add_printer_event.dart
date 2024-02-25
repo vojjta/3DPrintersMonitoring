@@ -1,12 +1,15 @@
-part of '../../../application/bloc/printer/add_printer_bloc.dart';
+part of './add_printer_bloc.dart';
 
 @immutable
-abstract class AddPrinterEvent {}
+sealed class AddPrinterEvent extends Equatable {}
 
-final class AddPrinterCall extends AddPrinterEvent {
+final class AddPrinterPressed extends AddPrinterEvent {
   final String name;
   final String address;
   final int port;
 
-  AddPrinterCall({required this.name, required this.address, required this.port});
+  AddPrinterPressed({required this.name, required this.address, required this.port});
+
+  @override
+  List<Object?> get props => [name, address, port];
 }

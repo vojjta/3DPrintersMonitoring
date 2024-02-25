@@ -1,6 +1,6 @@
-import 'dart:developer';
-
 import 'package:dio/dio.dart';
+import 'package:printer_monitoring/application/common/l.dart';
+import 'package:printer_monitoring/domain/entities/machine.dart';
 import 'package:printer_monitoring/domain/primitives/either.dart';
 import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
 import 'package:printer_monitoring/domain/values/job_status.dart';
@@ -11,16 +11,9 @@ import 'package:printer_monitoring/infrastructure/model/json/printer_status_resu
 import 'package:printer_monitoring/infrastructure/remote/clients/moonraker_client.dart';
 import 'package:retrofit/dio.dart';
 
-final class StatusMoonrakerRepository implements MachineRepository {
-  late final MoonrakerClient _client;
-
-  StatusMoonrakerRepository(final String baseUrl) {
-    BaseOptions options = BaseOptions(
-      connectTimeout: const Duration(milliseconds: 500),
-      receiveTimeout: const Duration(seconds: 1),
-    );
-    _client = MoonrakerClient(Dio(options), baseUrl: baseUrl);
-  }
+final class StatusMoonrakerRepository with L implements MachineRepository {
+  // TODO(Vojjta): remove this client dependency to make it more testable
+  MoonrakerClient? _client;
 
   @override
   Future<Either<MachineRepositoryStatus, JobStatus>> getJob() {
@@ -30,31 +23,41 @@ final class StatusMoonrakerRepository implements MachineRepository {
 
   @override
   Future<Either<MachineRepositoryStatus, MachineInfo>> getStatusInfo() async {
+    assert(_client != null, 'Machine address not set');
     try {
-      final PrinterStatusResult result = await _client.getPrinterStatus('temperature', 'temperature', 'state,message');
-      log('Status info result: $result', name: 'StatusMoonrakerRepository');
-      return Either.success(PrinterStatusMapper.toMachineInfo(result));
+      final PrinterStatusResult result = await _client!.getPrinterStatus('temperature', 'temperature', 'state,message');
+      l.d('Status info result: $result');
+      return Either.success(PrinterStatusMapper(result).toMachineInfo());
     } on DioException catch (e) {
-      log('Can not fetch status info pro API', error: e, name: 'StatusMoonrakerRepository');
-      Either.error(MachineRepositoryError(e));
+      l.e('Can not fetch status info pro API', error: e);
+      return Either.error(MachineRepositoryError(e));
     }
-    return Either.error(MachineRepositoryNotFound());
   }
 
   @override
   Future<Either<MachineRepositoryStatus, bool>> isRepositoryReady() async {
-    try {
-      final HttpResponse<PrinterInfoResult> info = await _client.getPrinterInfo();
+    assert(_client != null, 'Machine address not set');
 
+    try {
+      final HttpResponse<PrinterInfoResult> info = await _client!.getPrinterInfo();
       if (info.response.statusCode == 200) {
-        log('Connection to printer verified', name: 'StatusMoonrakerRepository');
-        log('${info.data}', name: 'StatusMoonrakerRepository');
+        l.d('Connection to printer verified');
+        l.d('${info.data}');
         return Either.success(true);
       }
     } on DioException catch (e) {
-      log('Can not verify connection to printer', error: e, name: 'StatusMoonrakerRepository');
+      l.d('Can not verify connection to printer', error: e);
       return Either.error(MachineRepositoryError(e));
     }
     return Either.success(false);
+  }
+
+  @override
+  void setMachine(Machine machine) {
+    BaseOptions options = BaseOptions(
+      connectTimeout: const Duration(milliseconds: 500),
+      receiveTimeout: const Duration(seconds: 1),
+    );
+    _client = MoonrakerClient(Dio(options), baseUrl: machine.httpAddress);
   }
 }

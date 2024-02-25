@@ -1,17 +1,24 @@
-part of '../../../application/bloc/status/status_bloc.dart';
+part of './status_bloc.dart';
 
 @immutable
-abstract class StatusState {}
+sealed class StatusState extends Equatable {
+  @override
+  List<Object?> get props => [];
+}
 
-class StatusInitial extends StatusState {}
+final class StatusInitial extends StatusState {}
 
-class StatusLoaded extends StatusState {
-
+final class StatusLoadSuccess extends StatusState {
   final double bedTemp;
   final double nozzleTemp;
 
-  StatusLoaded({required this.bedTemp, required this.nozzleTemp,});
+  StatusLoadSuccess({
+    required this.bedTemp,
+    required this.nozzleTemp,
+  });
 
+  @override
+  List<Object?> get props => [bedTemp, nozzleTemp];
 }
 
-class StatusLoadError extends StatusState {}
+final class StatusLoadFailure extends StatusState {}

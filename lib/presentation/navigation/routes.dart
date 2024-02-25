@@ -2,20 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:go_router/go_router.dart';
 import 'package:printer_monitoring/application/commands/has_any_machine_cmd.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
-import 'package:printer_monitoring/presentation/pages/add_printer_page.dart';
-import 'package:printer_monitoring/presentation/pages/home_page.dart';
-
-enum AppRoute {
-  home('/'),
-  addPrinter('/add-printer');
-
-  final String path;
-
-  const AppRoute(this.path);
-
-  @override
-  toString() => path;
-}
+import 'package:printer_monitoring/presentation/navigation/app_routes.dart';
+import 'package:printer_monitoring/presentation/pages/add_printer/add_printer_page.dart';
+import 'package:printer_monitoring/presentation/pages/home/home_page.dart';
 
 final class Routes {
   Routes._();
@@ -25,11 +14,11 @@ final class Routes {
       initialLocation: await _initialRoute(),
       routes: [
         GoRoute(
-          path: AppRoute.home.path,
+          path: AppRoutes.home.path,
           builder: (context, state) => const HomePage(),
         ),
         GoRoute(
-          path: AppRoute.addPrinter.path,
+          path: AppRoutes.addPrinter.path,
           builder: (context, state) => const AddPrinterPage(),
         ),
       ],
@@ -40,8 +29,8 @@ final class Routes {
     final hasMachine = await HasAnyMachineCmd(GetIt.I<StorageRepository>()).execute();
 
     if (hasMachine) {
-      return AppRoute.home.path;
+      return AppRoutes.home.path;
     }
-    return AppRoute.addPrinter.path;
+    return AppRoutes.addPrinter.path;
   }
 }

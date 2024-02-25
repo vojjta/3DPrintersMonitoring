@@ -1,6 +1,6 @@
 part of 'printer_bloc.dart';
 
 @immutable
-abstract class MachineEvent {}
+sealed class PrinterEvent {}
 
-class MachineLoadCall extends MachineEvent {}
+final class PrinterStarted extends PrinterEvent {}

@@ -1,11 +1,20 @@
-abstract class PrinterState {}
+part of './printer_bloc.dart';
 
-class InitialNoPrinter extends PrinterState {}
-
-class PrinterLoaded extends PrinterState {
-  final String name;
-
-  PrinterLoaded({required this.name});
+@immutable
+sealed class PrinterState extends Equatable {
+  @override
+  List<Object?> get props => [];
 }
 
-class PrinterLoadError extends PrinterState {}
+final class PrinterInitial extends PrinterState {}
+
+final class PrinterLoadSuccess extends PrinterState {
+  final String name;
+
+  PrinterLoadSuccess({required this.name});
+
+  @override
+  List<Object?> get props => [name];
+}
+
+final class PrinterLoadFailure extends PrinterState {}

@@ -1,31 +1,30 @@
 import 'package:bloc/bloc.dart';
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:get_it/get_it.dart';
-import 'package:printer_monitoring/application/bloc/printer/printer_state.dart';
-import 'package:printer_monitoring/application/mappers/machine_mapper.dart';
-import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
+import 'package:printer_monitoring/application/common/l.dart';
+import 'package:printer_monitoring/application/mappers/printer_mapper.dart';
 import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
-import 'package:printer_monitoring/infrastructure/remote/status_moonraker_repository.dart';
 
 part 'printer_event.dart';
+part 'printer_state.dart';
 
-class MachineBloc extends Bloc<MachineEvent, PrinterState> {
-  MachineBloc() : super(InitialNoPrinter()) {
-    on<MachineLoadCall>((_, final emit) async {
-      final repository = GetIt.I<StorageRepository>();
+class MachineBloc extends Bloc<PrinterEvent, PrinterState> with L {
+  final StorageRepository _storageRepository;
 
-      final machinesResult = await repository.getAllMachines();
+  MachineBloc(this._storageRepository) : super(PrinterInitial()) {
+    on<PrinterStarted>(_onPrinterStarted);
+  }
 
-      if (machinesResult.isSuccess && machinesResult.success.isNotEmpty) {
-        if (!GetIt.instance.isRegistered<MachineRepository>()) {
-          GetIt.I.registerSingleton<MachineRepository>(
-              StatusMoonrakerRepository(machinesResult.success.first.httpAddress));
-        }
-        emit(MachineMapper.toPrinterLoaded(machinesResult.success.first));
-        return;
-      }
+  void _onPrinterStarted(PrinterStarted state, Emitter<PrinterState> emit) async {
+    final machinesResult = await _storageRepository.getAllMachines();
 
-      emit(PrinterLoadError());
-    });
+    if (machinesResult.isSuccess && machinesResult.success.isNotEmpty) {
+      return emit(
+        PrinterMapper(machinesResult.success.first).toPrinterLoaded(),
+      );
+    }
+
+    l.e('Printer load error: ${machinesResult.error.runtimeType}');
+    emit(PrinterLoadFailure());
   }
 }

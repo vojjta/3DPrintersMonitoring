@@ -1,31 +1,43 @@
-import 'dart:developer';
-
 import 'package:bloc/bloc.dart';
-import 'package:get_it/get_it.dart';
+import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
-import 'package:printer_monitoring/application/mappers/machine_mapper.dart';
+import 'package:printer_monitoring/application/common/l.dart';
+import 'package:printer_monitoring/application/mappers/printer_info_mapper.dart';
 import 'package:printer_monitoring/domain/repositories/machine_repository.dart';
+import 'package:printer_monitoring/domain/repositories/storage_repository.dart';
 
 part 'status_event.dart';
 part 'status_state.dart';
 
-class StatusBloc extends Bloc<StatusEvent, StatusState> {
-  StatusBloc() : super(StatusInitial()) {
-    on<StatusRefreshPressed>((event, emit) async {
-      MachineRepository repository = GetIt.I<MachineRepository>();
+class StatusBloc extends Bloc<StatusEvent, StatusState> with L {
+  final MachineRepository _machineRepository;
+  final StorageRepository _storageRepository;
 
-      final readyResult = await repository.isRepositoryReady();
+  StatusBloc(this._machineRepository, this._storageRepository) : super(StatusInitial()) {
+    on<StatusRefreshPressed>(_onRefreshPressed);
+  }
 
-      if (readyResult.isSuccess && readyResult.success) {
-        final statusResult = await repository.getStatusInfo();
-        if (statusResult.isSuccess) {
-          log('Status loaded: ${statusResult.success}', name: 'StatusBloc');
-          emit(MachineMapper.toStatusLoaded(statusResult.success));
-          return;
-        }
+  void _onRefreshPressed(StatusRefreshPressed event, Emitter<StatusState> emit) async {
+    final storageResult = await _storageRepository.getAllMachines();
+    // load machine from storage
+    if (storageResult.isError) {
+      return emit(StatusLoadFailure());
+    }
+    // set machine to remote storage
+    _machineRepository.setMachine(storageResult.success.first);
+
+    // check if repository is ready
+    final readyResult = await _machineRepository.isRepositoryReady();
+
+    if (readyResult.isSuccess && readyResult.success) {
+      // get status info
+      final statusResult = await _machineRepository.getStatusInfo();
+      if (statusResult.isSuccess) {
+        l.d('Status loaded: ${statusResult.success}');
+        return emit(PrinterInfoMapper(statusResult.success).toStatusLoaded());
       }
-      log('Status load error: ${readyResult.error.runtimeType}', name: 'StatusBloc');
-      emit(StatusLoadError());
-    });
+    }
+    l.w('Status load error: ${readyResult.error.runtimeType}');
+    emit(StatusLoadFailure());
   }
 }

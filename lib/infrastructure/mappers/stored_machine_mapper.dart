@@ -1,23 +1,19 @@
+import 'package:meta/meta.dart';
 import 'package:printer_monitoring/domain/entities/machine.dart';
 import 'package:printer_monitoring/infrastructure/model/hive/stored_machine.dart';
 
+@immutable
 final class StoredMachineMapper {
-  StoredMachineMapper._();
+  final StoredMachine _storedMachine;
 
-  static StoredMachine fromMachine(final Machine machine) {
-    return StoredMachine(
-      machine.name,
-      machine.address.ip,
-      machine.address.port,
-    );
-  }
+  const StoredMachineMapper(this._storedMachine);
 
-  static Machine toMachine(final StoredMachine storedMachine) {
+  Machine toMachine() {
     return Machine.create(
-      storedMachine.id,
-      storedMachine.name,
-      storedMachine.address,
-      port: storedMachine.port,
+      _storedMachine.id,
+      _storedMachine.name,
+      _storedMachine.address,
+      port: _storedMachine.port,
     );
   }
 }
